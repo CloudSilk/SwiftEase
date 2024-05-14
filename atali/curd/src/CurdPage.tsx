@@ -601,7 +601,7 @@ export abstract class CurdPage<P extends CurdPageProps, S extends CurdPageState>
             if (this.state.pageConfig?.path === "") {
                 data = { pageName: this.state.pageConfig?.name, data: values }
             }
-            const resp = await this.state.service?.update(data)
+            const resp = await this.state.service?.add(data)
             if (resp.code === Code.Success) {
                 this.load(this)
                 eval(this.state.pageConfig?.submitAfter ?? '')
