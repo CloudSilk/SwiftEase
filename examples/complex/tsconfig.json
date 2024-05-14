@@ -1,0 +1,78 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        "src/.umi/*"
+      ],
+      "@umijs/max": [
+        "node_modules/umi"
+      ],
+      "@umijs/max/typings": [
+        "src/.umi/typings"
+      ],
+      "@swiftease/designable-shared": [
+        "../../designable/packages/shared/src"
+      ],
+      "@swiftease/designable-core": [
+        "../../designable/packages/core/src"
+      ],
+      "@swiftease/designable-react": [
+        "../../designable/packages/react/src"
+      ],
+      "@swiftease/designable-react-settings-form": [
+        "../../designable/packages/react-settings-form/src"
+      ],
+      "@swiftease/designable-formily-antd": [
+        "../../designable/formily/antd/src"
+      ],
+      "@swiftease/designable-formily-transformer": [
+        "../../designable/formily/transformer/src"
+      ],
+      "@swiftease/designable-formily-setters": [
+        "../../designable/formily/setters/src"
+      ],
+      "@swiftease/formily-antd-v5": [
+        "../../formily/packages/components/src"
+      ],
+      "@swiftease/atali-pkg": [
+        "../../atali/pkg/src"
+      ],
+      "@swiftease/atali-form": [
+        "../../atali/form/src"
+      ],
+      "@swiftease/atali-graph": [
+        "../../atali/graph/src"
+      ],
+      "@swiftease/atali-components": [
+        "../../atali/components/src"
+      ],
+      "@swiftease/atali-curd": [
+        "../../atali/curd/src"
+      ]
+    },
+  },
+  "extends": "./src/.umi/tsconfig.json"
+}

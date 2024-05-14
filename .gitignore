@@ -1,0 +1,8 @@
+node_modules/
+.idea
+*/node_modules/
+.npmrc
+examples/lobe*
+examples/chat*
+examples/AFFiNE
+yarn-error.log

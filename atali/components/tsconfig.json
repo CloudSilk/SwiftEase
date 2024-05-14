@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "declaration": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@swiftease/designable-shared": [
+        "../../designable/packages/shared/src"
+      ],
+      "@swiftease/designable-core": [
+        "../../designable/packages/core/src"
+      ],
+      "@swiftease/designable-react": [
+        "../../designable/packages/react/src"
+      ],
+      "@swiftease/designable-react-settings-form": [
+        "../../designable/packages/react-settings-form/src"
+      ],
+      "@swiftease/designable-formily-antd": [
+        "../../designable/formily/antd/src"
+      ],
+      "@swiftease/designable-formily-transformer": [
+        "../../designable/formily/transformer/src"
+      ],
+      "@swiftease/designable-formily-setters": [
+        "../../designable/formily/setters/src"
+      ],
+      "@swiftease/formily-antd-v5": [
+        "../../formily/packages/components/src"
+      ],
+      "@swiftease/atali-pkg":[
+        "../pkg/src"
+      ],
+      "@swiftease/atali-form":[
+        "../form/src"
+      ]
+    },
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": [
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.less"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es",
+    "dist",
+    "typings",
+    "**/__test__",
+    "test",
+    "docs",
+    "tests"
+  ]
+}

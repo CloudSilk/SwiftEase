@@ -1,0 +1,33 @@
+{
+  "name": "root",
+  "private":true,
+  "workspaces": [
+    "formily/packages/*",
+    "designable/formily/*",
+    "designable/packages/*",
+    "atali/*"
+  ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "build": "lerna run build",
+    "preversion": "yarn run build",
+    "version:beta": "lerna version prerelease --preid beta",
+    "release:github": "ts-node scripts/release release",
+    "release:force": "lerna publish from-package --yes --registry=https://registry.npmjs.org/",
+    "prelease:force": "lerna publish from-package --yes --dist-tag next",
+    "release": "lerna publish --registry=https://registry.npmjs.org/",
+    "codingPublish": "lerna publish --registry=https://registry.npmjs.org/"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.28",
+    "antd": "5.12.4",
+    "lerna": "^7.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0"
+  },
+  "version": "0.0.0"
+}

@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "declaration": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@swiftease/designable-shared": ["../shared/src"],
+      "@swiftease/designable-react": ["../react/src"],
+      "@swiftease/designable-core": ["../core/src"],
+      "@swiftease/designable-react-settings-form": ["../react-settings-form/src"],
+    }
+  }
+}

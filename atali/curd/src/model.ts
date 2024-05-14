@@ -1,0 +1,144 @@
+import { BaseModel } from "@swiftease/atali-pkg"
+
+export interface Page extends BaseModel {
+    listItemLayout: string
+    proListAvatarDataIndex: string
+    queryBefore: string
+    listGridTypeGutter: number
+    proListShowAvatar: boolean
+    cardAvatarField: string
+    pageSize: number
+    scrollX: number
+    loadDetailBefore: string
+    proListTitleDataIndex: string
+    proListItemMouseEnter: string
+    cardLoadType: number
+    proListTypeDataIndex: string
+    addFormid: string
+    sumbitAfter: string
+    editable: string
+    cardContentField: string
+    cardDescriptionField: string
+    proListItemClick: string
+    metadataid: string
+    proListShowTitle: boolean
+    queryAfter: string
+    labelField: string
+    valueField: string
+    listLoadType: number
+    proListGhost: boolean
+    proListSubTitleValueType: string
+    searchDefaultValue: string
+    proListExtraDataIndex: string
+    listGridTypeColumn: number
+    description: string
+    path: string
+    showSelection: boolean
+    proListShowType: number
+    proListShowContent: boolean
+    type: number
+    cardImageField: string
+    searchFormid: string
+    showAdd: boolean
+    proListExtraValueType: string
+    submitBefore: string
+    listTitleField: string
+    listKeyField: string
+    enable: boolean
+    listContentField: string
+    proListShowMetaExtra: boolean
+    proListTypeRender: string
+    proListAvatarRender: string
+    proListShowExtra: string
+    proListTitleValueType: string
+    submitAfter: string
+    proListShowSubTitle: boolean
+    proListTitleRender: string
+    proListAvatarValueType: string
+    proListExtraRender: string
+    proListCardActionProps: string
+    proListSubTitleRender: string
+    proListContentRender: string
+    proListShowMetaType: boolean
+    proListSubTitleDataIndex: string
+    listDescriptionField: string
+    proListTypeValueType: string
+    listExpandable: boolean
+    editFormid: string
+    loadDetailAfter: string
+    viewFormid: string
+    cardTitleField: string
+    listAvatarField: string
+    name: string
+    proListShowActions: string
+    proListContentDataIndex: string
+    showIndex: boolean
+    title: string
+    sumbitBefore: string
+    proListContentValueType: string
+    toolBar: PageToolBar
+    fields: PageField[]
+    buttons: PageButton[]
+    bordered?: boolean
+    isChild?: boolean,
+    pages?: string
+}
+
+export interface PageField extends BaseModel {
+    rowKey: boolean
+    sort: number
+    dataType: string
+    componentProps: string
+    copyable: boolean
+    name: string
+    ellipsis: boolean
+    pageID: string
+    labelField: string
+    valueEnum: string
+    component: string
+    showInTable: boolean
+    title: string
+    valueField: string
+    enableSort: boolean
+    fixed: string
+    width: string
+}
+
+export interface PageToolBar extends BaseModel {
+    showImport: boolean
+    showBatchDel: boolean
+    addScript: string
+    exportUri: string
+    showAdd: boolean
+    rowSelection: boolean
+    importMulti: boolean
+    importMaxCount: number
+    pageID: string
+    fullScreen: boolean
+    showExport: boolean
+    reload: boolean
+    importFormid: string
+    setting: boolean
+    addPermission: string
+    batchDelUri: string
+    render: string
+    importUri: string
+}
+
+export interface PageButton extends BaseModel {
+    showPosition: number
+    expanded: boolean
+    hrefFunc: string
+    hiddenScript: string
+    script: string
+    key: string
+    blank: boolean
+    pageID: string
+    formID: string
+    permission: string
+    enable: boolean
+    showType: string
+    index: number
+    label: string
+    href: string
+}

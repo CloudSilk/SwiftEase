@@ -1,0 +1,44 @@
+{
+  "name": "@swiftease/designable-react",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "father dev",
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "codingPublish": "npm publish --registry=https://registry.npmjs.org/"
+  },
+  "keywords": [],
+  "authors": [
+    "ants.guoxf@gmail.com"
+  ],
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "father": "^4.3.0",
+    "prettier": "^3.0.1",
+    "react-color": "^2.19.3",
+    "react-tiny-popover": "^7.2.4"
+  },
+  "dependencies": {
+    "@swiftease/designable-core": "^0.0.1",
+    "@ant-design/cssinjs": "^1.16.1",
+    "@formily/reactive": "^2.2.29",
+    "@formily/reactive-react": "^2.2.29",
+    "antd": "5.12.4",
+    "classnames": "^2.3.2",
+    "dateformat": "^5.0.3",
+    "react": "^18.2.0"
+  },
+  "gitHead": ""
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@swiftease/atali-pkg",
+  "version": "0.0.3",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "father dev",
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "codingPublish": "npm publish --registry=https://registry.npmjs.org/"
+  },
+  "keywords": [],
+  "authors": [
+    "ants.guoxf@gmail.com"
+  ],
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^2.2.7",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.28",
+    "father": "^4.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0"
+  },
+  "dependencies": {
+    "js-cookie": "^3.0.1",
+    "query-string": "^7.1.1"
+  },
+  "gitHead": ""
+}

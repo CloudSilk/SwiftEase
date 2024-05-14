@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "declaration": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@swiftease/designable-shared": ["../../packages/shared/src"],
+      "@swiftease/designable-react": ["../../packages/react/src"],
+      "@swiftease/designable-core": ["../../packages/core/src"],
+      "@swiftease/designable-flow": ["../../packages/flow/src"],
+      "@swiftease/designable-react-settings-form": ["../../packages/react-settings-form/src"],
+      "@swiftease/designable-formily-setters": ["../setters/src"],
+      "@swiftease/formily-antd-v5":["../../../formily/packages/components/src"]
+    }
+  }
+}
