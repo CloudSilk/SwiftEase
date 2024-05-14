@@ -4,7 +4,7 @@ import { ProColumns } from '@ant-design/pro-table';
 import { Page, PageField } from './model';
 import SearchComponent from './components/Search/index'
 import TableComponent from './components/Table/index'
-import { Image, Table, Tag } from 'antd';
+import { Image, Tag } from 'antd';
 import { CurdPage, CurdPageProps, CurdPageState } from './CurdPage';
 import moment from 'moment';
 import Icon from './components/Icon';

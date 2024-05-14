@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/atali-form",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -25,7 +25,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@swiftease/atali-pkg": "^0.0.3",
+    "@swiftease/atali-pkg": "^0.0.4",
     "@swiftease/designable-core": "^0.0.1",
     "@swiftease/designable-formily-antd": "^0.0.1",
     "@swiftease/designable-formily-transformer": "^0.0.1",
