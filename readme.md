@@ -7,6 +7,24 @@
 
 [Demo](https://github.com/CloudSilk/example)
 
+![1](/images/screen1.png)
+![2](/images/screen2.png)
+![3](/images/screen3.png)
+![4](/images/screen4.png)
+
+
+## 感谢
+
+- 本程序使用了以下开源项目
+  - [@formily](https://formilyjs.org)
+  - [antd@5](https://ant.design)
+  - [umijs](https://umijs.org/)
+  - [designable](https://github.com/alibaba/designable)
+  - [Ant Design Pro](https://github.com/ant-design/ant-design-pro)
+  - [AntV X6](https://github.com/antvis/X6)
+
+感谢以上项目的作者和贡献者
+
 ## 社区
 
 如果微信群二维码过期，请添加社区助手的微信，备注云梭。
