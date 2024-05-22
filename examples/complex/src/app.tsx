@@ -16,6 +16,17 @@ loader.config({
   paths: { vs: (process.env.WEB_BASE !== undefined && process.env.WEB_BASE !== "" ? process.env.WEB_BASE : "") + `/js` }
 });
 
+umiRequest.interceptors.request.use((url, options) => {
+  const token = getToken();
+  if (token) {
+    options.headers = {
+      ...options.headers,
+      authorization: 'Bearer ' + token,
+    }
+  }
+  return {url, options}
+});
+
 umiRequest.interceptors.response.use(newResponseInterceptor(() => {
   replaceTakeRedirect(history, '/user/login', '/user/login')
 },
