@@ -9,12 +9,11 @@ import { notification } from 'antd';
 import './app.less'
 const loginPath = '/user/login';
 // process.env.NODE_ENV = 'production';
-import { loader } from '@monaco-editor/react';
-import { ProLayoutProps, SettingDrawer, TopNavHeader } from '@ant-design/pro-components';
+import * as monaco from "monaco-editor";
+import { loader } from "@monaco-editor/react";
+loader.config({ monaco });
 
-loader.config({
-  paths: { vs: (process.env.WEB_BASE !== undefined && process.env.WEB_BASE !== "" ? process.env.WEB_BASE : "") + `/js` }
-});
+import { ProLayoutProps, SettingDrawer, TopNavHeader } from '@ant-design/pro-components';
 
 umiRequest.interceptors.request.use((url, options) => {
   const token = getToken();

@@ -308,7 +308,7 @@ render(): React.ReactNode {
             <ArrowRightOutlined />
 
             {<Button type="link" onClick={() => {
-                this.showAddDialog("添加采集点位", {
+                this.showAddDialog("新增采集点位", {
                     factoryID: this.props.selectedFactoryID,
                     productionLineID: this.props.selectedProductionLineID,
                     stationID: this.props.selectedStationID

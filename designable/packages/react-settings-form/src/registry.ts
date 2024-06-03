@@ -1,7 +1,7 @@
 import loader from '@monaco-editor/loader'
 
 const Registry = {
-  cdn: '//cdn.jsdelivr.net/npm',
+  cdn: '//unpkg.com',
 }
 
 export const setNpmCDNRegistry = (registry: string) => {
