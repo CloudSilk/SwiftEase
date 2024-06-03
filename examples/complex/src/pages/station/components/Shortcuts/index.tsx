@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { CommonService, Page } from '@swiftease/atali-pkg';
-import { Button } from 'antd';
+import { Code, CommonService, Page } from '@swiftease/atali-pkg';
+import { Button, notification } from 'antd';
 import React from 'react';
 import './index.less'
 import { FormDialog, FormLayout } from '@swiftease/formily-antd-v5'
@@ -43,6 +43,10 @@ interface ShortcutsState {
     stationFunctionService: CommonService<any>
     stationFunctionPC: Page
     stationFunctionFormSchema: any
+
+    collectionPointService: CommonService<any>
+    collectionPointPC: Page
+    collectionPointFormSchema: any
 }
 export default class Shortcuts extends React.Component<ShortcutsProps, ShortcutsState> {
     constructor(props: any) {
@@ -57,6 +61,7 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
         const stationAPPPC = await defaultCache.getPageConfig('StationAPP');
         const stationDevicePC = await defaultCache.getPageConfig('StationDevice');
         const stationFunctionPC = await defaultCache.getPageConfig('StationFunction');
+        const collectionPointPC = await defaultCache.getPageConfig('CollectionPoint');
 
         let factoryFormSchema = {
             type: 'object',
@@ -150,6 +155,19 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
             }
         }
 
+        let collectionPointFormSchema = {
+            type: 'object',
+            properties: {},
+        };
+        if (collectionPointPC && collectionPointPC.data &&
+            collectionPointPC.data.addFormID && collectionPointPC.data.addFormID !== "") {
+            const resp = await defaultCache.getFormConfig(collectionPointPC.data.addFormID)
+            if (resp?.code == 20000) {
+                const schema = JSON.parse(resp.data.schema);
+                collectionPointFormSchema = schema.schema
+            }
+        }
+
 
         this.setState({
             factoryFormSchema, plFormSchema, deviceFormSchema,
@@ -166,93 +184,116 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
             stationFunctionFormSchema: stationFunctionFormSchema,
             stationFunctionPC: stationFunctionPC.data,
             stationFunctionService: newService('aiot/station/function'),
+
+            collectionPointFormSchema: collectionPointFormSchema,
+            collectionPointPC: collectionPointPC.data,
+            collectionPointService: newService('aiot/station/collectionpoint'),
         })
     }
 
     showAddDialog(title: string, initialValue: any, formSchema: any, pageConfig: any, service: CommonService<any>, success?: () => void) {
-        FormDialog({ title: title, width: 1200, maskClosable: false }, () => {
+        const formDialog = FormDialog({ title: title, width: 1200, maskClosable: false }, () => {
             return (
                 <FormLayout labelCol={6} wrapperCol={16}>
                     {this.props.createSchemaField && this.props.createSchemaField(formSchema, funcs, false)}
                 </FormLayout>
             )
         })
-            .open({ initialValues: initialValue })
-            .then((values: any) => {
-                eval(pageConfig?.submitBefore ?? '')
-                if (pageConfig?.path != "") {
-                    service?.add({ pageName: pageConfig?.name, ...values }).then((resp) => {
-                        eval(pageConfig?.submitAfter ?? '')
-                        success && success()
-                    })
-                } else {
-                    service?.add({ pageName: pageConfig?.name, data: values }).then((resp) => {
-                        eval(pageConfig?.submitAfter ?? '')
-                        success && success()
-                    })
-                }
-            })
-    }
+        formDialog.open({
+            initialValues: initialValue
+        }, async (env, values) => {
+            console.log(env)
+            eval(pageConfig?.submitBefore ?? '')
+            let data = { ...values }
+            if (pageConfig?.path === "") {
+                data = { pageName: pageConfig?.name, data: values }
+            }
+            const resp = await service?.add(data)
+            if (resp?.code === Code.Success) {
+                success && success()
+                eval(pageConfig?.submitAfter ?? '')
+                notification.success({ message: "新增成功" })
+                return true
+            }
+            return false
+        }, true).then((values: any) => { })
+    
+    // formDialog.open({ initialValues: initialValue })
+    //     .then((values: any) => {
+    //         eval(pageConfig?.submitBefore ?? '')
+    //         if (pageConfig?.path != "") {
+    //             service?.add({ pageName: pageConfig?.name, ...values }).then((resp) => {
+    //                 eval(pageConfig?.submitAfter ?? '')
+    //                 success && success()
+    //             })
+    //         } else {
+    //             service?.add({ pageName: pageConfig?.name, data: values }).then((resp) => {
+    //                 eval(pageConfig?.submitAfter ?? '')
+    //                 success && success()
+    //             })
+    //         }
+    //     })
+}
 
-    render(): React.ReactNode {
-        return (
-            <div className='shotcuts'>
-                <Button type="link" onClick={() => {
-                    this.showAddDialog("新增工厂", {}, this.state.factoryFormSchema,
-                        this.state.factoryPageConfig,
-                        this.props.factoryService,
-                        this.props.addFactorySuccess)
-                }}>
-                    添加工厂
-                </Button>
-                <ArrowRightOutlined />
-                <Button type="link" onClick={() => {
-                    this.showAddDialog("新增产线", {
-                        factoryID: this.props.selectedFactoryID
-                    }, this.state.plFormSchema,
-                        this.state.productionLinePC,
-                        this.props.productionLineService,
-                        this.props.addProductionLineSuccess)
-                }}>
-                    添加产线
-                </Button>
-                <ArrowRightOutlined />
-                <Button type="link" onClick={() => {
-                    this.showAddDialog("新增工站", {
-                        factoryID: this.props.selectedFactoryID,
-                        productionLineID: this.props.selectedProductionLineID
-                    }, this.state.stationFormSchema,
-                        this.state.stationPC,
-                        this.props.stationService,
-                        this.props.addStationSuccess)
-                }}>
-                    添加工站
-                </Button>
-                <ArrowRightOutlined />
-                <Button type="link" onClick={() => {
-                    this.showAddDialog("新增设备", {
-                        stationID: this.props.selectedStationID
-                    }, this.state.deviceFormSchema,
-                        this.state.stationDevicePC,
-                        this.state.stationDeviceService,
-                        this.props.addStationDeviceSuccess)
-                }}>
-                    添加设备
-                </Button>
-                <ArrowRightOutlined />
-                {<Button type="link" onClick={() => {
-                    this.showAddDialog("新增工序", {
-                        factoryID: this.props.selectedFactoryID,
-                        productionLineID: this.props.selectedProductionLineID,
-                        stationID: this.props.selectedStationID
-                    }, this.state.workmanshipFormSchema,
-                        this.state.workmanshipPC,
-                        this.state.workmanshipService,
-                        this.props.addWorkmanshipSuccess)
-                }}>
-                    添加工序
-                </Button>}
-                {/* {this.props.execOrderByMes && <Button type="link" onClick={() => {
+render(): React.ReactNode {
+    return (
+        <div className='shotcuts'>
+            <Button type="link" onClick={() => {
+                this.showAddDialog("新增工厂", {}, this.state.factoryFormSchema,
+                    this.state.factoryPageConfig,
+                    this.props.factoryService,
+                    this.props.addFactorySuccess)
+            }}>
+                添加工厂
+            </Button>
+            <ArrowRightOutlined />
+            <Button type="link" onClick={() => {
+                this.showAddDialog("新增产线", {
+                    factoryID: this.props.selectedFactoryID
+                }, this.state.plFormSchema,
+                    this.state.productionLinePC,
+                    this.props.productionLineService,
+                    this.props.addProductionLineSuccess)
+            }}>
+                添加产线
+            </Button>
+            <ArrowRightOutlined />
+            <Button type="link" onClick={() => {
+                this.showAddDialog("新增工站", {
+                    factoryID: this.props.selectedFactoryID,
+                    productionLineID: this.props.selectedProductionLineID
+                }, this.state.stationFormSchema,
+                    this.state.stationPC,
+                    this.props.stationService,
+                    this.props.addStationSuccess)
+            }}>
+                添加工站
+            </Button>
+            <ArrowRightOutlined />
+            <Button type="link" onClick={() => {
+                this.showAddDialog("新增设备", {
+                    stationID: this.props.selectedStationID
+                }, this.state.deviceFormSchema,
+                    this.state.stationDevicePC,
+                    this.state.stationDeviceService,
+                    this.props.addStationDeviceSuccess)
+            }}>
+                添加设备
+            </Button>
+            <ArrowRightOutlined />
+            {<Button type="link" onClick={() => {
+                this.showAddDialog("新增工序", {
+                    factoryID: this.props.selectedFactoryID,
+                    productionLineID: this.props.selectedProductionLineID,
+                    stationID: this.props.selectedStationID
+                }, this.state.workmanshipFormSchema,
+                    this.state.workmanshipPC,
+                    this.state.workmanshipService,
+                    this.props.addWorkmanshipSuccess)
+            }}>
+                添加工序
+            </Button>}
+            {/* {this.props.execOrderByMes && <Button type="link" onClick={() => {
                     this.showAddDialog("新增工步", {
                         factoryID: this.props.selectedFactoryID,
                         productionLineID: this.props.selectedProductionLineID,
@@ -264,34 +305,49 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
                 }}>
                     添加工步
                 </Button>} */}
-                <ArrowRightOutlined />
-                <Button type="link" onClick={() => {
-                    this.showAddDialog("新增应用", {
-                        factoryID: this.props.selectedFactoryID,
-                        productionLineID: this.props.selectedProductionLineID,
-                        stationID: this.props.selectedStationID
-                    }, this.state.appFormSchema,
-                        this.state.stationAPPPC,
-                        this.state.stationAPPService,
-                        this.props.addStationAPPSuccess)
-                }}>
-                    添加应用
-                </Button>
-                <ArrowRightOutlined />
-                <Button type="link" onClick={() => {
-                    this.showAddDialog("新增表单", {
-                        factoryID: this.props.selectedFactoryID,
-                        productionLineID: this.props.selectedProductionLineID,
-                        stationID: this.props.selectedStationID,
-                        isForm: true
-                    }, this.state.appFormSchema,
-                        this.state.stationAPPPC,
-                        this.state.stationAPPService,
-                        this.props.addStationAPPSuccess)
-                }}>
-                    添加表单
-                </Button>
-            </div>
-        );
-    }
+            <ArrowRightOutlined />
+
+            {<Button type="link" onClick={() => {
+                this.showAddDialog("添加采集点位", {
+                    factoryID: this.props.selectedFactoryID,
+                    productionLineID: this.props.selectedProductionLineID,
+                    stationID: this.props.selectedStationID
+                }, this.state.collectionPointFormSchema,
+                    this.state.collectionPointPC,
+                    this.state.collectionPointService,
+                    this.props.addStationFunctionSuccess)
+            }}>
+                添加采集点位
+            </Button>}
+            <ArrowRightOutlined />
+
+            <Button type="link" onClick={() => {
+                this.showAddDialog("新增应用", {
+                    factoryID: this.props.selectedFactoryID,
+                    productionLineID: this.props.selectedProductionLineID,
+                    stationID: this.props.selectedStationID
+                }, this.state.appFormSchema,
+                    this.state.stationAPPPC,
+                    this.state.stationAPPService,
+                    this.props.addStationAPPSuccess)
+            }}>
+                添加应用
+            </Button>
+            <ArrowRightOutlined />
+            <Button type="link" onClick={() => {
+                this.showAddDialog("新增表单", {
+                    factoryID: this.props.selectedFactoryID,
+                    productionLineID: this.props.selectedProductionLineID,
+                    stationID: this.props.selectedStationID,
+                    isForm: true
+                }, this.state.appFormSchema,
+                    this.state.stationAPPPC,
+                    this.state.stationAPPService,
+                    this.props.addStationAPPSuccess)
+            }}>
+                添加表单
+            </Button>
+        </div>
+    );
+}
 }
