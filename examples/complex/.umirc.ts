@@ -34,6 +34,7 @@ export default defineConfig({
     baseSeparator: '-',
   },
   initialState: {},
+  esbuildMinifyIIFE:true,
   history: { type: 'hash' },
   request: {},
   dva: {},
@@ -224,8 +225,5 @@ export default defineConfig({
   jsMinifierOptions: {
     target: ['chrome80', 'es2020']
   },
-  scripts: [
-    { src: (process.env.WEB_BASE !== undefined && process.env.WEB_BASE !== "" ? process.env.WEB_BASE : "") + `/js/editor/loader.js` }
-  ],
 });
 
