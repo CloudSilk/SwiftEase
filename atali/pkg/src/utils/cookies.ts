@@ -4,6 +4,9 @@ let tokenKey = 'access-token';
 export const setTokenKey = (key: string) => {
     tokenKey = key
 }
+export const getTokenKey=()=>{
+    return tokenKey
+}
 export const getToken = () => Cookies.get(tokenKey);
 export const setToken = (token: string) => Cookies.set(tokenKey, token);
 export const removeToken = () => Cookies.remove(tokenKey);
