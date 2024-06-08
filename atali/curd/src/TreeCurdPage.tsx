@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { BaseTreeModel, Page, CommonService, RecursiveCall, GetDetailResponse } from '@swiftease/atali-pkg';
-import { funcs, newService } from '@swiftease/atali-form'
+import { defaultCache, funcs, newService } from '@swiftease/atali-form'
 import { FormButtonGroup, Reset, Submit } from '@swiftease/formily-antd-v5'
 import { createForm } from '@formily/core'
 
@@ -16,6 +16,8 @@ export interface TreeCurdPageProps extends CurdPageProps {
     showTitle?: boolean
     className?: string
     rowClick?: (data: any) => void
+    // 新增是弹框显示表单
+    addInDialog?: boolean
 }
 
 export interface TreeCurdPageState extends CurdPageState {
@@ -79,11 +81,23 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
         };
 
 
-        if (pageConfig.data.addFormID && pageConfig.data.addFormID != "") {
-            const resp = await this.state.formService?.detail(pageConfig.data.addFormID)
+        if (pageConfig.data.editFormID && pageConfig.data.editFormID != "") {
+            const resp = await defaultCache.getFormConfig(pageConfig.data.editFormID)
             if (resp?.code == 20000) {
                 const schema = JSON.parse(resp.data.schema);
                 editFormSchema = schema.schema
+            }
+        }
+
+        let addFormSchema = {
+            type: 'object',
+            properties: {},
+        };
+        if (pageConfig.data.addFormID && pageConfig.data.addFormID !== "") {
+            const resp = await defaultCache.getFormConfig(pageConfig.data.addFormID)
+            if (resp?.code == 20000) {
+                const schema = JSON.parse(resp.data.schema);
+                addFormSchema = schema.schema
             }
         }
 
@@ -92,20 +106,21 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
         if (addDefaultValue && addDefaultValue !== "") {
             initialValue = JSON.parse(addDefaultValue)
         }
-        const self =this;
+        const self = this;
         this.setState({
             // @ts-ignore
             pageConfig: pageConfig?.data,
             editFormSchema: editFormSchema,
+            addFormSchema: addFormSchema,
             service: newService<any>(pageConfig.data.path != "" ? pageConfig.data.path : "curd/common/" + pageConfig.data.name),
             pageName: this.props.pageName,
             editForm: createForm({
                 initialValues: { id: "", ...initialValue }
             }),
-        },()=>{
+        }, () => {
             self.load(self)
         });
-        
+
     }
 
     async componentDidMount() {
@@ -181,26 +196,31 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
         if (!this.state?.pageConfig) return (<></>)
         const customeBtns = this.createToolBarBtn()
         return (
-            <PageContainer content={ undefined} title={this.props.showTitle ? this.state.pageConfig?.title : false}
-            token={{
-                paddingBlockPageContainerContent: 0,
-                paddingInlinePageContainerContent: 0
-            }}
-             breadcrumb={undefined} className={this.props.className}>
+            <PageContainer content={undefined} title={this.props.showTitle ? this.state.pageConfig?.title : false}
+                token={{
+                    paddingBlockPageContainerContent: 0,
+                    paddingInlinePageContainerContent: 0
+                }}
+                breadcrumb={undefined} className={this.props.className}>
                 <Row className='bg-white box-round tree-container' gutter={0}>
-                    <Col span={6} className='each-col shadow-normal tree-left-part' style={{height:this.calcTableHeight()}}>
+                    <Col span={6} className='each-col shadow-normal tree-left-part' style={{ height: this.calcTableHeight() }}>
                         <Row>
                             <Col span={12}><Input.Search style={{ marginBottom: 8 }} placeholder="Search" onChange={e => this.onChange(e, this)} /></Col>
                             <Col>
                                 <Button onClick={() => {
-                                    this.setState({ isAdd: true })
-                                    let initialValue = {}
-                                    const addDefaultValue = this.state.pageConfig?.["addDefaultValue"]
-                                    if (addDefaultValue && addDefaultValue !== "") {
-                                        initialValue = JSON.parse(addDefaultValue)
+                                    if (this.props.addInDialog)
+                                        this.showAdd(this)
+                                    else {
+                                        this.setState({ isAdd: true })
+                                        let initialValue = {}
+                                        const addDefaultValue = this.state.pageConfig?.["addDefaultValue"]
+                                        if (addDefaultValue && addDefaultValue !== "") {
+                                            initialValue = JSON.parse(addDefaultValue)
+                                        }
+                                        this.state.editForm?.setValues(initialValue, "overwrite")
+                                        this.state.editForm?.reset()
                                     }
-                                    this.state.editForm?.setValues(initialValue, "overwrite")
-                                    this.state.editForm?.reset()
+
                                 }}>新增</Button>
                                 {this.state.pageConfig?.toolBar['showExport'] && <Button onClick={() => {
                                     this.exportTable({ ids: this.state.selectedIds });
@@ -234,10 +254,22 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                     </Col>
                     <Col span={18} className='each-col shadow-normal'>
                         <Form labelCol={6} wrapperCol={12} form={this.state?.editForm}>
-                            {this.props.createSchemaField && this.props.createSchemaField(this.state?.editFormSchema, funcs, false)}
+                            {this.props.createSchemaField && this.props.createSchemaField(this.state?.editFormSchema, {...funcs,reloadSon:()=>{
+                                this.state.service?.detail(this.state.editForm?.values['id']).then(resp => {
+                                    if (resp?.code == 20000) {
+                                        eval(this.state.pageConfig?.loadDetailAfter ?? '')
+                                        this.state.editForm?.setValues(resp?.data, "overwrite")
+                                        this.setState({ isAdd: false })
+                                        if (this.props.rowClick) {
+                                            this.props.rowClick(resp?.data)
+                                        }
+                                    }
+                                    this.load(this);
+                                })
+                            }}, false)}
                             {/* @ts-ignore */}
                             <FormButtonGroup.FormItem align={'right'}>
-                                <Submit onSubmit={(values) => {
+                            {!this.props.addInDialog &&<Submit onSubmit={(values) => {
                                     eval(this.state.pageConfig?.submitBefore ?? '')
                                     if (this.state.isAdd) {
                                         this.state.service?.add(values).then((resp) => {
@@ -251,8 +283,8 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                                         this.state.service?.update(values).then((resp) => {
                                             if (resp?.code == 20000) {
                                                 this.load(this);
-                                                this.setState({ isAdd: true })
-                                                this.state.editForm?.reset()
+                                                // this.setState({ isAdd: true })
+                                                // this.state.editForm?.reset()
                                             } else {
 
                                             }
@@ -260,9 +292,9 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                                         })
                                     }
 
-                                }}>{this.state.isAdd ? '新增' : '保存'}</Submit>
-                                <Reset>重置</Reset>
-                                {!this.state.isAdd && <Submit onSubmit={
+                                }}>{this.state.isAdd ? '新增' : '保存'}</Submit>}
+                                {!this.props.addInDialog && <Reset>重置</Reset>}
+                                {!this.state.isAdd && !this.props.addInDialog && <Submit onSubmit={
                                     (values) => {
                                         Modal.confirm({
                                             title: '确认删除',

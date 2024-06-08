@@ -165,21 +165,23 @@ export class LeftNav extends React.Component<LeftNavProps, LeftNavState> {
         </FormLayout>
       )
     })
-      .open({ initialValues: initialValue })
-      .then((values: any) => {
+      .open({ initialValues: initialValue }, async (env, values) => {
+        console.log(env)
         eval(pageConfig?.submitBefore ?? '')
-        if (pageConfig?.path != "") {
-          service?.update({ pageName: pageConfig?.name, ...values }).then((resp) => {
-            eval(pageConfig?.submitAfter ?? '')
-            success && success()
-          })
-        } else {
-          service?.update({ pageName: pageConfig?.name, data: values }).then((resp) => {
-            eval(pageConfig?.submitAfter ?? '')
-            success && success()
-          })
+        let data = { ...values }
+        if (pageConfig?.path === "") {
+          data = { pageName: pageConfig?.name, data: values }
         }
-      })
+        const resp = await service?.update(data)
+        if (resp.code === Code.Success) {
+          eval(pageConfig?.submitAfter ?? '')
+          notification.success({ message: "更新成功" })
+          success && success()
+          return true
+        }
+        return false
+      },true)
+      .then((values: any) => {})
   }
   confirmAction(title: string, ok: () => void) {
     Modal.confirm({

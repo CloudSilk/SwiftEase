@@ -14,6 +14,7 @@ export default () => {
     const query = queryString.parse(location.search);
     const pageName = query?.pageName ?? '';
     const pageType = Number(query?.type ?? 1);
+    const addInDialog = Boolean(query?.addInDialog ?? false);
     const {tabs, searchCaches, setSearchCaches} = useModel('global');
     const setSearchValuesState = (searchValues: any, pageConfig: any) => {
         for(let i = 0; i < tabs.length; i++) {
@@ -45,7 +46,7 @@ export default () => {
     return <TabManager key={uuid()}>
             <>
                 {pageType === 1 && <TableCurdPage  key={uuid()} createSchemaField={createSchemaField} setSearchValuesState={setSearchValuesState} searchCaches={searchCaches} pageName={pageName} actionRef={actionRef}></TableCurdPage>}
-                {pageType === 2 && <TreeCurdPage  key={uuid()} createSchemaField={createSchemaField} pageName={pageName}></TreeCurdPage>}
+                {pageType === 2 && <TreeCurdPage  key={uuid()} createSchemaField={createSchemaField} pageName={pageName} addInDialog={addInDialog}></TreeCurdPage>}
                 {pageType === 3 && <ListCurdPage  key={uuid()} createSchemaField={createSchemaField} pageName={pageName}></ListCurdPage>}
                 {pageType === 4 && <CardCurdPage  key={uuid()} createSchemaField={createSchemaField} pageName={pageName}></CardCurdPage>}
                 {pageType === 5 && <ProListCurdPage  key={uuid()} createSchemaField={createSchemaField} pageName={pageName} actionRef={actionRef}></ProListCurdPage>}
