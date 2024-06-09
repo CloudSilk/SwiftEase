@@ -21,13 +21,23 @@ clean:
 	rm -rf designable/packages/react/dist
 	rm -rf designable/packages/shared/dist
 	rm -rf formily/packages/components/dist
+clean-all:clean
+	rm -rf atali/components/node_modules
+	rm -rf atali/curd/node_modules
+	rm -rf atali/form/node_modules
+	rm -rf atali/graph/node_modules
+	rm -rf atali/pkg/node_modules
+	rm -rf designable/formily/antd/node_modules
+	rm -rf designable/formily/setters/node_modules
+	rm -rf designable/formily/transformer/node_modules
+	rm -rf designable/packages/core/node_modules
+	rm -rf designable/packages/flow/node_modules
+	rm -rf designable/packages/react-settings-form/node_modules
+	rm -rf designable/packages/react/node_modules
+	rm -rf designable/packages/shared/node_modules
+	rm -rf formily/packages/components/node_modules
 publish:
-	# yarn build
-	# cd atali/components && yarn publish --registry=https://registry.npmjs.org/
-	# cd atali/curd && yarn publish --registry=https://registry.npmjs.org/
-	# cd atali/form/ && yarn publish --registry=https://registry.npmjs.org/
-	cd atali/graph && yarn publish --registry=https://registry.npmjs.org/
-	cd atali/pkg && yarn publish --registry=https://registry.npmjs.org/
+	yarn build
 	cd designable/formily/antd && yarn publish --registry=https://registry.npmjs.org/
 	cd designable/formily/setters && yarn publish --registry=https://registry.npmjs.org/
 	cd designable/formily/transformer && yarn publish --registry=https://registry.npmjs.org/
@@ -37,3 +47,8 @@ publish:
 	cd designable/packages/react && yarn publish --registry=https://registry.npmjs.org/
 	cd designable/packages/shared && yarn publish --registry=https://registry.npmjs.org/
 	cd formily/packages/components && yarn publish --registry=https://registry.npmjs.org/
+	cd atali/pkg && yarn publish --registry=https://registry.npmjs.org/
+	cd atali/form/ && yarn publish --registry=https://registry.npmjs.org/
+	cd atali/components && yarn publish --registry=https://registry.npmjs.org/
+	cd atali/curd && yarn publish --registry=https://registry.npmjs.org/
+	cd atali/graph && yarn publish --registry=https://registry.npmjs.org/

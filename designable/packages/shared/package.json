@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/designable-shared",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -24,10 +24,10 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "antd": "5.12.4",
+    "@types/react": "^18.2.45",
+    "antd": "5.18.0",
     "father": "^4.3.0",
-    "react": "^18.2.0"
+    "react": "^18.2.45"
   },
   "dependencies": {
     "requestidlecallback": "^0.3.0"

@@ -267,6 +267,7 @@ const Remove = forwardRef<HTMLSpanElement, CommonProps>((props, ref) => {
         self?.disabled ? `${prefixCls}-remove-disabled` : '',
         props.className
       )}
+      //@ts-ignore
       ref={ref}
       onClick={(e) => {
         if (self?.disabled) return
@@ -307,6 +308,7 @@ const MoveDown = forwardRef<HTMLSpanElement, CommonProps>((props, ref) => {
         self?.disabled ? `${prefixCls}-move-down-disabled` : '',
         props.className
       )}
+      //@ts-ignore
       ref={ref}
       onClick={(e) => {
         if (self?.disabled) return
@@ -318,6 +320,7 @@ const MoveDown = forwardRef<HTMLSpanElement, CommonProps>((props, ref) => {
         array.field?.moveDown?.(index)
         array.props?.onMoveDown?.(index)
       }}
+      //@ts-ignore
       icon={isUndef(props.icon) ? <DownOutlined /> : props.icon}
     >
       {props.title || self.title}
@@ -347,6 +350,7 @@ const MoveUp = forwardRef<HTMLSpanElement, CommonProps>((props, ref) => {
         self?.disabled ? `${prefixCls}-move-up-disabled` : '',
         props.className
       )}
+      //@ts-ignore
       ref={ref}
       onClick={(e) => {
         if (self?.disabled) return
@@ -358,6 +362,7 @@ const MoveUp = forwardRef<HTMLSpanElement, CommonProps>((props, ref) => {
         array?.field?.moveUp(index)
         array?.props?.onMoveUp?.(index)
       }}
+      //@ts-ignore
       icon={isUndef(props.icon) ? <UpOutlined /> : props.icon}
     >
       {props.title || self.title}

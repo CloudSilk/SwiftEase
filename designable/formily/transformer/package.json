@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/designable-formily-transformer",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -26,10 +26,10 @@
     "father": "^4.3.0"
   },
   "dependencies": {
-    "@swiftease/designable-core": "^0.0.1",
-    "@swiftease/designable-shared": "^0.0.1",
-    "@formily/core": "^2.2.29",
-    "@formily/json-schema": "^2.2.29"
+    "@swiftease/designable-core": "^0.0.4",
+    "@swiftease/designable-shared": "^0.0.4",
+    "@formily/core": "^2.3.1",
+    "@formily/json-schema": "^2.3.1"
   },
   "gitHead": ""
 }

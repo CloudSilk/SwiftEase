@@ -21,13 +21,13 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.28",
-    "antd": "5.12.4",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.45",
+    "antd": "5.18.0",
     "lerna": "^7.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0"
+    "react": "^18.2.45",
+    "react-dom": "^18.2.45",
+    "react-is": "^18.2.45"
   },
   "version": "0.0.0"
 }

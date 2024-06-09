@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/atali-pkg",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -24,16 +24,16 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/js-cookie": "^2.2.7",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.28",
+    "@types/js-cookie": "^3.0.3",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.45",
     "father": "^4.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0"
+    "react": "^18.2.45",
+    "react-dom": "^18.2.45",
+    "react-is": "^18.2.45"
   },
   "dependencies": {
-    "js-cookie": "^3.0.1",
+    "js-cookie": "^3.0.3",
     "query-string": "^7.1.1"
   },
   "gitHead": ""

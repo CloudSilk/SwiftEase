@@ -2,7 +2,7 @@ import { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { clearMenuItem } from '@ant-design/pro-layout/lib/utils/utils';
 import { history, Link, useModel } from '@umijs/max';
 import RightContent from '@/components/RightContent';
-import { GetDetailResponse, User, newResponseInterceptor, getToken, replaceTakeRedirect, Menu as AtaliMenu, RecursiveCall } from '@swiftease/atali-pkg';
+import { GetDetailResponse, User, newResponseInterceptor, setTokenKey, getToken, replaceTakeRedirect, Menu as AtaliMenu, RecursiveCall } from '@swiftease/atali-pkg';
 import umiRequest from 'umi-request';
 import { MyIcon } from '@swiftease/atali-form';
 import { notification } from 'antd';
@@ -12,6 +12,9 @@ const loginPath = '/user/login';
 import * as monaco from "monaco-editor";
 import { loader } from "@monaco-editor/react";
 loader.config({ monaco });
+
+//设置Token Key名
+setTokenKey("cloudsilk-token")
 
 import { ProLayoutProps, SettingDrawer, TopNavHeader } from '@ant-design/pro-components';
 
@@ -23,7 +26,7 @@ umiRequest.interceptors.request.use((url, options) => {
       authorization: 'Bearer ' + token,
     }
   }
-  return {url, options}
+  return { url, options }
 });
 
 umiRequest.interceptors.response.use(newResponseInterceptor(() => {
@@ -111,7 +114,7 @@ export const layout = ({
 }) => {
 
   const { tabs, setTabs } = useModel('global');
-  const ll={
+  const ll = {
     logo: (process.env.WEB_BASE !== undefined && process.env.WEB_BASE !== "" ? process.env.WEB_BASE : "") + "/icon-32x32.png",
     layout: 'mix',
     siderWidth: 230,
@@ -230,9 +233,9 @@ export const layout = ({
     },
     className: "my-app-layout",
     headerRender: (props: any) => {
-      const menuData=[]
-      props.menuData?.forEach((value:any)=>{
-        menuData.push({...value,children:[]})
+      const menuData = []
+      props.menuData?.forEach((value: any) => {
+        menuData.push({ ...value, children: [] })
       })
       const clearMenuData = clearMenuItem(menuData || []);
       return <TopNavHeader

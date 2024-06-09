@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/designable-react",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -24,21 +24,21 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.2.45",
     "father": "^4.3.0",
-    "prettier": "^3.0.1",
+    "prettier": "^3.2.5",
     "react-color": "^2.19.3",
     "react-tiny-popover": "^7.2.4"
   },
   "dependencies": {
-    "@swiftease/designable-core": "^0.0.1",
-    "@ant-design/cssinjs": "^1.16.1",
-    "@formily/reactive": "^2.2.29",
-    "@formily/reactive-react": "^2.2.29",
-    "antd": "5.12.4",
+    "@swiftease/designable-core": "^0.0.4",
+    "@ant-design/cssinjs": "^1.20.0",
+    "@formily/reactive": "^2.3.1",
+    "@formily/reactive-react": "^2.3.1",
+    "antd": "5.18.0",
     "classnames": "^2.3.2",
     "dateformat": "^5.0.3",
-    "react": "^18.2.0"
+    "react": "^18.2.45"
   },
   "gitHead": ""
 }
