@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/designable-core",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -29,7 +29,7 @@
     "react": "^18.2.45"
   },
   "dependencies": {
-    "@swiftease/designable-shared": "^0.0.4",
+    "@swiftease/designable-shared": "^1.0.0",
     "@formily/path": "^2.3.1",
     "@formily/reactive": "^2.3.1",
     "@juggle/resize-observer": "^3.4.0"

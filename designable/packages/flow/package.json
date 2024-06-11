@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/designable-flow",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -24,8 +24,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@swiftease/designable-react": "^0.0.4",
-    "@swiftease/formily-antd-v5": "^0.0.4",
+    "@swiftease/designable-react": "^1.0.0",
+    "@swiftease/formily-antd-v5": "^1.0.0",
     "@ant-design/cssinjs": "^1.20.0",
     "@antv/x6": "^2.16.1",
     "@antv/x6-react-shape": "^2.2.2",

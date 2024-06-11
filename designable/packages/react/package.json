@@ -1,6 +1,6 @@
 {
   "name": "@swiftease/designable-react",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -31,7 +31,7 @@
     "react-tiny-popover": "^7.2.4"
   },
   "dependencies": {
-    "@swiftease/designable-core": "^0.0.4",
+    "@swiftease/designable-core": "^1.0.0",
     "@ant-design/cssinjs": "^1.20.0",
     "@formily/reactive": "^2.3.1",
     "@formily/reactive-react": "^2.3.1",
