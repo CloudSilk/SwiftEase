@@ -194,6 +194,7 @@ export const ArrayTable: DnFC<TableProps<any>> = observer((props) => {
                         },
                     }}
                 >
+                    
                     {columns.map((node) => {
                         const children = node.children.map((child) => {
                             return <TreeNodeWidget node={child} key={child.id}/>
