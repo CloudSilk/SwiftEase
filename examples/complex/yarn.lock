@@ -160,7 +160,7 @@
     rc-resize-observer "^0.2.3"
     rc-util "^5.0.6"
 
-"@ant-design/pro-editor@latest":
+"@ant-design/pro-editor@^1.2.1", "@ant-design/pro-editor@latest":
   version "1.2.1"
   resolved "https://registry.npmmirror.com/@ant-design/pro-editor/-/pro-editor-1.2.1.tgz#82d7342696505ab2d8cc2491398f9d179d042a3c"
   integrity sha512-pDAH/07KcnaySiQxImL7rG5aDYMPjNyGSd4VABPESnNCW2/PwHvqeMviwfWnwaBkgzoIqgAnzHgIV3xWuocNuA==

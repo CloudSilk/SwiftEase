@@ -12,6 +12,7 @@ import { Button } from 'antd/lib/radio';
 import { MyIcon } from '@swiftease/atali-form'
 import { CurdPage, CurdPageProps, CurdPageState } from './CurdPage';
 import './index.less';
+import { EditorLayout } from '@ant-design/pro-editor';
 export interface TreeCurdPageProps extends CurdPageProps {
     showTitle?: boolean
     className?: string
@@ -202,10 +203,15 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                     paddingInlinePageContainerContent: 0
                 }}
                 breadcrumb={undefined} className={this.props.className}>
-                <Row className='bg-white box-round tree-container' gutter={0}>
-                    <Col span={6} className='each-col shadow-normal tree-left-part' style={{ height: this.calcTableHeight() }}>
-                        <Row>
-                            <Col span={12}><Input.Search style={{ marginBottom: 8 }} placeholder="Search" onChange={e => this.onChange(e, this)} /></Col>
+                <EditorLayout
+                    style={{
+                        maxWidth: '100%',
+                        height: this.calcTableHeight(),
+                    }}
+                    header={{
+                        iconConfig: false,
+                        children: <Row style={{ width: "100%" }}>
+                            <Col span={4}  style={{ marginRight: 5 }}><Input.Search size='large' placeholder="查询" onChange={e => this.onChange(e, this)} /></Col>
                             <Col>
                                 <Button onClick={() => {
                                     if (this.props.addInDialog)
@@ -230,10 +236,20 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                                 }}>导入</Button>}
                                 {customeBtns}
                             </Col></Row>
-                        <Tree treeData={this.state.data} key={'id'}
+                    }}
+                    footer={false}
+                    bottomPannel={false}
+                    rightPannel={false}
+                    leftPannel={{
+                        style:{
+                            height: this.calcTableHeight()-40,
+                            overflowY: "auto"
+                        },
+                        children: <Tree treeData={this.state.data} key={'id'}
                             expandedKeys={this.state.expandedKeys}
                             autoExpandParent={this.state.autoExpandParent}
                             onExpand={this.onExpand}
+                            showLine={true}
                             filterTreeNode={this.filterTreeNode}
                             titleRender={(node) => {
                                 return <span>{node.icon && <MyIcon type={node.icon}></MyIcon>}{node.title}</span>
@@ -250,11 +266,16 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                                     }
                                 })
 
-                            }}></Tree>
-                    </Col>
-                    <Col span={18} className='each-col shadow-normal'>
-                        <Form labelCol={6} wrapperCol={12} form={this.state?.editForm}>
-                            {this.props.createSchemaField && this.props.createSchemaField(this.state?.editFormSchema, {...funcs,reloadSon:()=>{
+                            }}></Tree>,
+                    }}
+                    centerPannel={{
+                        style:{
+                            height: this.calcTableHeight()-40,
+                            overflowY: "auto"
+                        },
+                        children:<div><Form labelCol={6} wrapperCol={12} form={this.state?.editForm}>
+                        {this.props.createSchemaField && this.props.createSchemaField(this.state?.editFormSchema, {
+                            ...funcs, reloadSon: () => {
                                 this.state.service?.detail(this.state.editForm?.values['id']).then(resp => {
                                     if (resp?.code == 20000) {
                                         eval(this.state.pageConfig?.loadDetailAfter ?? '')
@@ -266,57 +287,58 @@ export class TreeCurdPage extends CurdPage<TreeCurdPageProps, TreeCurdPageState>
                                     }
                                     this.load(this);
                                 })
-                            }}, false)}
-                            {/* @ts-ignore */}
-                            <FormButtonGroup.FormItem align={'right'}>
-                            {!this.props.addInDialog &&<Submit onSubmit={(values) => {
-                                    eval(this.state.pageConfig?.submitBefore ?? '')
-                                    if (this.state.isAdd) {
-                                        this.state.service?.add(values).then((resp) => {
-                                            if (resp?.code == 20000) {
-                                                this.load(this);
-                                                this.setState({ isAdd: true })
-                                                this.state.editForm?.reset()
-                                            }
-                                        })
-                                    } else {
-                                        this.state.service?.update(values).then((resp) => {
-                                            if (resp?.code == 20000) {
-                                                this.load(this);
-                                                // this.setState({ isAdd: true })
-                                                // this.state.editForm?.reset()
-                                            } else {
+                            }
+                        }, false)}
+                        {/* @ts-ignore */}
+                        <FormButtonGroup.FormItem align={'right'}>
+                            {!this.props.addInDialog && <Submit onSubmit={(values) => {
+                                eval(this.state.pageConfig?.submitBefore ?? '')
+                                if (this.state.isAdd) {
+                                    this.state.service?.add(values).then((resp) => {
+                                        if (resp?.code == 20000) {
+                                            this.load(this);
+                                            this.setState({ isAdd: true })
+                                            this.state.editForm?.reset()
+                                        }
+                                    })
+                                } else {
+                                    this.state.service?.update(values).then((resp) => {
+                                        if (resp?.code == 20000) {
+                                            this.load(this);
+                                            // this.setState({ isAdd: true })
+                                            // this.state.editForm?.reset()
+                                        } else {
 
-                                            }
+                                        }
 
-                                        })
-                                    }
+                                    })
+                                }
 
-                                }}>{this.state.isAdd ? '新增' : '保存'}</Submit>}
-                                {!this.props.addInDialog && <Reset>重置</Reset>}
-                                {!this.state.isAdd && !this.props.addInDialog && <Submit onSubmit={
-                                    (values) => {
-                                        Modal.confirm({
-                                            title: '确认删除',
-                                            onOk: () => {
-                                                this.state.service?.delete({ pageName: this.state.pageConfig?.name, id: values.id }).then((resp) => {
-                                                    if (resp?.code == 20000) {
-                                                        this.load(this);
-                                                        this.setState({ isAdd: true })
-                                                        this.state.editForm?.reset()
-                                                    } else {
+                            }}>{this.state.isAdd ? '新增' : '保存'}</Submit>}
+                            {!this.props.addInDialog && <Reset>重置</Reset>}
+                            {!this.state.isAdd && !this.props.addInDialog && <Submit onSubmit={
+                                (values) => {
+                                    Modal.confirm({
+                                        title: '确认删除',
+                                        onOk: () => {
+                                            this.state.service?.delete({ pageName: this.state.pageConfig?.name, id: values.id }).then((resp) => {
+                                                if (resp?.code == 20000) {
+                                                    this.load(this);
+                                                    this.setState({ isAdd: true })
+                                                    this.state.editForm?.reset()
+                                                } else {
 
-                                                    }
-                                                })
-                                            }
-                                        })
-                                    }
-                                }>删除</Submit>}
-                                {!this.state.isAdd && this.createEditBtn(this)}
-                            </FormButtonGroup.FormItem>
-                        </Form>
-                    </Col>
-                </Row>
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            }>删除</Submit>}
+                            {!this.state.isAdd && this.createEditBtn(this)}
+                        </FormButtonGroup.FormItem>
+                    </Form></div>
+                    }}
+                />
             </PageContainer>
         );
     }

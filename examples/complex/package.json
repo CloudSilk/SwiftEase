@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.3.7",
     "@ant-design/pro-chat": "^1.13.3",
     "@ant-design/pro-components": "^2.7.10",
+    "@ant-design/pro-editor": "^1.2.1",
     "@antv/x6-react-shape": "^2.2.2",
     "@blocksuite/presets": "nightly",
     "@lobehub/ui": "^1.128.4",
