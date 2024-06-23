@@ -65,33 +65,29 @@ export class LoginComponent extends React.Component<LoginComponentProps, LoginCo
 
     async handleSubmit(values: any) {
         const self = this
-        this.setState({ submitting: true }, async () => {
-            try {
-                // 登录
-                if (!this.props.login) {
-                    return
-                }
-                let msg: User.LoginResult
-                msg = await this.props.login({ ...values, type: self.state.type })
-
-                if (msg.code === Code.Success) {
-                    setToken(msg.data);
-                    const defaultloginSuccessMessage = self.props.formatMessage('pages.login.success', '登录成功！');
-                    message.success(defaultloginSuccessMessage);
-                    await self.props.fetchUserInfo();
-                    self.props.redirect();
-                    return;
-                }
-                // 如果失败去设置用户错误信息
-                self.setState({ userLoginState: msg })
-            } catch (error) {
-                const defaultloginFailureMessage = self.props.formatMessage('pages.login.failure', '登录失败，请重试！');
-
-                message.error(defaultloginFailureMessage);
+        try {
+            // 登录
+            if (!this.props.login) {
+                return
             }
-            this.setState({ submitting: false });
-        })
+            let msg: User.LoginResult
+            msg = await this.props.login({ ...values, type: self.state.type })
 
+            if (msg.code === Code.Success) {
+                setToken(msg.data);
+                const defaultloginSuccessMessage = self.props.formatMessage('pages.login.success', '登录成功！');
+                message.success(defaultloginSuccessMessage);
+                await self.props.fetchUserInfo();
+                self.props.redirect();
+                return;
+            }
+            // 如果失败去设置用户错误信息
+            self.setState({ userLoginState: msg })
+        } catch (error) {
+            const defaultloginFailureMessage = self.props.formatMessage('pages.login.failure', '登录失败，请重试！');
+
+            message.error(defaultloginFailureMessage);
+        }
     }
 
     async componentDidMount() {
@@ -128,7 +124,7 @@ export class LoginComponent extends React.Component<LoginComponentProps, LoginCo
                             <div className={"main"} style={{ marginTop: this.props.showLogo ? 0 : 156 }}>
                                 <ProForm
                                     initialValues={{
-                                        autoLogin: true,
+                                        autoLogin: false,
                                         username: this.props.defaultUserName,
                                         password: this.props.defaultPassword
                                     }}
@@ -148,7 +144,7 @@ export class LoginComponent extends React.Component<LoginComponentProps, LoginCo
                                         },
                                     }}
                                     onFinish={async (values) => {
-                                        this.handleSubmit(values);
+                                        await this.handleSubmit(values);
                                     }}
                                 >
                                     <Tabs activeKey={this.state.type} onChange={(activeKey: string) => {
