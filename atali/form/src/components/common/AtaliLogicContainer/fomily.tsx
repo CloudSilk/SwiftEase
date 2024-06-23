@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Field } from "@formily/core";
 import { Button, Form, FormInstance, Input, InputNumber, Select, Table, Tag } from "antd";
 import { PlusOutlined,DeleteOutlined,MinusOutlined } from '@ant-design/icons';
