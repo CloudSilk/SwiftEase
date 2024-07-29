@@ -19,6 +19,7 @@ export interface MonacoInputProps extends EditorProps {
   helpCodeViewWidth?: number | string
   extraLib?: string
   checkSyntax: boolean
+  wordWrap: boolean,
   onChange?: (value: string) => void
 }
 
@@ -34,6 +35,7 @@ export const AtaliMonacoInput: React.FC<MonacoInputProps> & {
   helpCodeViewWidth,
   height,
   checkSyntax,
+  wordWrap,
   onMount,
   onChange,
   ...props
@@ -266,6 +268,7 @@ export const AtaliMonacoInput: React.FC<MonacoInputProps> & {
             language={realLanguage.current}
             options={{
               ...props.options,
+              wordWrap: wordWrap,
               lineNumbers: 'off',
               readOnly: true,
               glyphMargin: false,

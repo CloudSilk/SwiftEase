@@ -31,6 +31,15 @@ AtaliMonacoInput.Behavior = createBehavior(
               "defaultValue": false,
             }
           },
+          wordWrap: {
+            type: 'boolean',
+            title: '自动换行',
+            'x-decorator': 'FormItem',
+            'x-component': 'Switch',
+            'x-component-props': {
+              "defaultValue": true,
+            }
+          },
           language: {
             "type": 'string',
             "title": 'Language',
