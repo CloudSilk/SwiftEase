@@ -10,6 +10,8 @@ interface ComplexPageProps {
   createSchemaField?: (formSchema: any, funcs: any, horizontal: boolean) => JSX.Element
   newShortcuts: (selectedGrandpaID: any, selectedFatherID: any, selectedSonID: any, sonDetailView: React.RefObject<ViewComponent>, leftNavView: React.RefObject<LeftNav>) => JSX.Element
   avatar: JSX.Element
+  leftNav?: JSX.Element
+  detailElement?: JSX.Element
   settings: Partial<ProSettings>
   fatherService: CommonService<any>
   sonService: CommonService<any>
@@ -23,7 +25,7 @@ interface ComplexPageProps {
   sonPageName: string
   getDetail?: (id: any) => any
   detailFormID: string
-  title:string
+  title: string
 }
 interface ComplexPageState {
   selectedGrandpaID: any
@@ -59,7 +61,7 @@ export class ComplexPage extends React.Component<ComplexPageProps, ComplexPageSt
     return (
       <ProLayout
         {...this.props.settings}
-        title= {this.props.title}
+        title={this.props.title}
         actionsRender={() => {
           return [<div>
             {this.props.avatar ?? <></>}
@@ -74,7 +76,7 @@ export class ComplexPage extends React.Component<ComplexPageProps, ComplexPageSt
         <div style={{ margin: "0px 0 0 0" }}>
           <Row>
             <Col span={8} style={{ paddingRight: "10px" }}>
-              <LeftNav
+              {this.props.leftNav || <LeftNav
                 ref={this.leftNavView}
                 createSchemaField={this.props.createSchemaField}
                 grandpaService={this.props.grandpaService}
@@ -95,17 +97,17 @@ export class ComplexPage extends React.Component<ComplexPageProps, ComplexPageSt
                 }}
                 onChangeSon={(id) => {
                   this.setState({ selectedSonID: id });
-                }}></LeftNav></Col>
+                }}></LeftNav>}</Col>
             <Col span={16}>
               <div style={{ height: getBodyHeight() - 60, overflowY: "scroll" }}>
-                <ViewComponent ref={this.sonDetailView} createSchemaField={this.props.createSchemaField} getDetail={async (id) => {
+                {this.props.detailElement || <ViewComponent ref={this.sonDetailView} createSchemaField={this.props.createSchemaField} getDetail={async (id) => {
                   const resp = await this.props.sonService.detail(id)
                   return resp
                 }} id={this.state.selectedSonID} formID={this.props.detailFormID} funcs={{
                   reloadSon: () => {
                     this.sonDetailView.current?.reload()
                   }
-                }}></ViewComponent>
+                }}></ViewComponent>}
               </div>
             </Col>
           </Row>
