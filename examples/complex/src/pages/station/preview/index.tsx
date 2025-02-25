@@ -93,7 +93,7 @@ export default class AIoTDesignerPage extends React.Component<any, AIoTDesignerP
     }
     render() {
         return <GraphPreviewPage
-            fileUrlPrefix='https://hhm.xw.life'
+            fileUrlPrefix=''
             system='Station'
             data={this.state.workmanship}
             graphFormID='3f2c8c66-c963-4c89-8152-be2de58655a2'

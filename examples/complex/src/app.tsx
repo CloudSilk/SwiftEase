@@ -133,7 +133,7 @@ export const layout = ({
           }}
         >
           <div><Link to={'/station/config'}><span>工站配置</span></Link></div>
-          <div>© 2024 上海炘智科技有限公司</div>
+          <div>© 2025 上海炘智科技有限公司</div>
         </div>
       );
     },

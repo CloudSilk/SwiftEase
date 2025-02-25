@@ -15,10 +15,45 @@ export default {
     },
   },
   dev: {
-    "/api/":{
+    "/api/agi/sharedevice":{
       target: 'http://127.0.0.1:48089',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    "/api/curd":{
+      target: 'http://127.0.0.1:48081',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    "/api/form":{
+      target: 'http://127.0.0.1:48081',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/api/core/auth': {
+      target: 'http://127.0.0.1:48080',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/api/bpm': {
+      target: 'http://127.0.0.1:48084',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/api/aiot': {
+      target: 'http://127.0.0.1:48086',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/api/mes': {
+      target: 'http://127.0.0.1:48087',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/api/core/file/download':{
+      target: 'https://kuibu.atali.cn',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    }
   },
 };
