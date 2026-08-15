@@ -6,3 +6,8 @@ examples/lobe*
 examples/chat*
 examples/AFFiNE
 yarn-error.log
+examples/drawdb
+examples/lowcode-designable-taro-react
+examples/print-template-designer
+examples/react-admin
+examples/vue-plugin-hiprint
