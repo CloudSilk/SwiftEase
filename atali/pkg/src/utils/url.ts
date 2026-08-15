@@ -1,4 +1,6 @@
-import { parse, stringify } from 'query-string';
+import queryString from 'query-string';
+
+const { parse, stringify } = queryString;
 
 export function replaceTakeRedirect(history: any, path: string, loginPath: string) {
     const { search, pathname } = history.location;
